@@ -1,5 +1,5 @@
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<?php
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<?php
   // Connect to MySQL database
   $servername = "localhost";
   $username = "id20172692_isuru";
