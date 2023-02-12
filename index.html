@@ -9,7 +9,9 @@
 src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="button.scss">
+
+    <script type="module" crossorigin src="/assets/index-11811603.js"></script>
+    <link rel="stylesheet" href="/assets/index-e3742bcd.css">
   </head>
   <body class="light-theme">
     <div class="experience">
@@ -207,7 +209,7 @@ src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
       font-size: 16px;
     }
   </style>
-  <form id="myForm" action="./connection.php" method="POST">
+  <form id="myForm"> <!--action="./connection.php" method="POST">-->
     <input type="text" id="name" name="name" placeholder="Your Name" required>
     <input type="email" id="email" name="email" placeholder="Email id" required>
     <input type="text" id="phone" name="phone" placeholder="Phone number" required>
@@ -277,36 +279,104 @@ src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
     });
    </script>
   </form>
-  
-  <script>
-$('#myForm').on('submit', function(event) {
-    event.preventDefault(); // prevent reload
-    
-    var formData = new FormData(this);
-    formData.append('service_id', 'service_5eaotsu');
-    formData.append('template_id', 'template_zzprob6');
-    formData.append('user_id', 'lfsuYhwkOxVwyQOnH');
-    formData.append('auto_reply', true); // send an auto-reply
-    formData.append('auto_reply_template', 'template_zzprob6'); 
-    formData.append('name', document.getElementById("name").value);
-    formData.append('email', document.getElementById("email").value);
-    formData.append('pnumber', document.getElementById("phone").value);
-    formData.append('message', document.getElementById("message").value);
- 
-    $.ajax('https://api.emailjs.com/api/v1.0/email/send-form', {
-        type: 'POST',
-        data: formData,
-        contentType: false, // auto-detection
-        processData: false // no need to parse formData to string
-    }).done(function() {
-        alert('Your mail is sent!');
-    }).fail(function(error) {
-        alert('Oops... ' + JSON.stringify(error));
+
+<script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+<script>
+  // EmailJS configuration
+  emailjs.init("lfsuYhwkOxVwyQOnH");
+
+  // Form submit event
+  document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Get form data
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var pnumber = document.getElementById("phone").value;
+    var message = document.getElementById("message").value;
+
+    // Send email using EmailJS
+    emailjs.send("service_5eaotsu", "template_zzprob6", {
+      name: name,
+      email: email,
+      pnumber: pnumber,
+      message: message
+    })
+    .then(function(response) {
+      console.log("Email successfully sent!");
+    })
+    .catch(function(error) {
+      console.log("An error occurred: " + error);
     });
-    this.reset();
-      formData.clear();
-});
-  </script>
+
+    // Send data to PHP script to store in MySQL database
+    fetch("connection.php", {
+      method: "POST",
+      body: new FormData(document.getElementById("myForm"))
+    })
+
+    .then(function(response) {
+      if (response.ok) {
+        console.log("Form data successfully stored in database!");
+      } else {
+        console.log("An error occurred: " + response.statusText);
+      }
+    })
+    .catch(function(error) {
+      console.log("An error occurred: " + error);
+    });
+  .then(() => {
+      document.getElementById("myForm").reset();
+    })
+
+</script>
+
+
+<script>
+  // EmailJS configuration
+  emailjs.init("lfsuYhwkOxVwyQOnH");
+
+  // Form submit event
+  $("#myForm").submit(function(event) {
+    event.preventDefault();
+
+    // Get form data
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var pnumber = $("#phone").val();
+    var message = $("#message").val();
+
+    // Send email using EmailJS
+    emailjs.send("service_5eaotsu", "template_zzprob6", {
+      name: name,
+      email: email,
+      pnumber: pnumber,
+      message: message
+    })
+    .then(function(response) {
+      console.log("Email successfully sent!");
+      $("#thankyou-modal").modal("show");
+    })
+    .catch(function(error) {
+      console.log("An error occurred: " + error);
+    });
+  // Send data to PHP script to store in MySQL database
+    fetch("connection.php", {
+      method: "POST",
+      body: new FormData(document.getElementById("myForm"))
+    })
+    .then(() => {
+      $("#myForm")[0].reset();
+    })
+    .catch(function(error) {
+      console.log("An error occurred: " + error);
+    });
+  });
+</script>
+
 
 </div>
     <!--end form-->
@@ -314,6 +384,11 @@ $('#myForm').on('submit', function(event) {
 <div class="div">Inspired Idea : by boko33. & Andrew Woan</div>
       </div>
     </div>
-    <script type="module" src="/main.js"></script>
+    <script>
+    window.addEventListener("load", function() {
+	var bannerNode = document.querySelector('[alt="www.000webhost.com"]').parentNode.parentNode;
+   bannerNode.parentNode.removeChild(bannerNode);
+});
+</script>
   </body>
 </html>
